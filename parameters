@@ -1,0 +1,23 @@
+seed 768
+
+num_fibers 5000
+num_beads_per_fiber 9
+interbead_distance 12.5
+bead_mass 
+fiber_diameter 0.000000956
+num_steps 1
+final_time 50
+timestep 0.001
+Lx 200
+Ly 200
+Lz 300
+temperature 310
+friction_coefficient 0.00000207
+cross_thresh 5
+
+fiber_stiffness 0.002
+bending_stiffness 1
+crosslink_stiffness 0.1
+
+write_interval 1
+sample_interval 1
