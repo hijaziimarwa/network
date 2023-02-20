@@ -51,14 +51,12 @@ def launch_multiple_simulations(Nf_list, nb_list, l0_list, ko_list, seed_list):
                         launch_simulation(Nf, nb, l0, ko, seed)
 
 
-Nf_list = [2450]
+Nf_list = [2300]
 nb_list = [19]
 l0_list = [5.5]
 ko_list = [1]
+seed_list = [8]
 
-
-seed_list = [768]
-# print(seed_list)
 
 launch_multiple_simulations(Nf_list, nb_list, l0_list, ko_list, seed_list)
 

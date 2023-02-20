@@ -702,7 +702,7 @@ void System::compute_forces()
   compute_bending_forces();
   compute_langevin_forces();
 
-  // cout << "Total energy: " << total_energy << endl;
+
 }
 
 void System::compute_stretching_forces()
@@ -712,8 +712,8 @@ void System::compute_stretching_forces()
   double radial_force;
   ofstream myfile;
   ofstream myfile1;
-  myfile.open("id_same.txt");
-  myfile1.open("id_cross.txt");
+  myfile.open("/home/hijazi/Documents/Collagen_Fiber_Network/code_static/id_same.txt");
+  myfile1.open("/home/hijazi/Documents/Collagen_Fiber_Network/code_static/id_cross.txt");
 
   for (int i = 0; i < num_beads; i++)
   {
@@ -739,19 +739,21 @@ void System::compute_stretching_forces()
 
             if (beads[i]->fiber == beads[j]->fiber)
             {
-              myfile << beads[i]->id << " " << beads[j]->id << endl;
+             // myfile << beads[i]->id << " " << beads[j]->id << endl;
               radial_force = settings->kf * delta / dr;
               potential_energy_stretching += 0.5 * settings->kf * delta * delta;
+              myfile<<delta<<" "<<dr<<" "<<beads[i]->eq_dist[k]<<" " <<endl;
             }
             else
             {
-              myfile1 << beads[i]->id << " " << beads[j]->id << endl;
+             // myfile1 << beads[i]->id << " " << beads[j]->id << endl;
               radial_force = settings->kc * delta / dr;
               if (0.5 * settings->kc * delta * delta > 0.1)
               {
                 // cout << "CROSSLINK " << steps << " " << i << " " << j << " " << 0.5 * settings->kc * delta * delta << " " << dr << " " << beads[i]->eq_dist[k] << " " << radial_force << endl;
               }
               potential_energy_stretching += 0.5 * settings->kc * delta * delta;
+              myfile1<<delta<<" "<<dr<<" "<<beads[i]->eq_dist[k]<<" " <<endl;
             }
 
             beads[i]->force[0] += radial_force * dx;
@@ -867,7 +869,7 @@ void System::compute_langevin_forces()
   C = sqrt(2 * settings->temperature * settings->kb * settings->gamma / settings->dt);
   for (int i = 0; i < num_beads; i++)
   {
-    if (beads[i]->is_active)
+    if (beads[i]->is_active and beads[i]->is_mobile)
     {
 
       beads[i]->force[0] += -settings->gamma * beads[i]->velocity[0] + C * rnd->nextGauss();
@@ -973,10 +975,13 @@ void System ::velocity_initialization()
       beads[i]->previous_position[2] = beads[i]->position[2] - beads[i]->velocity[2] * settings->dt;
 
       kinetic_energy = kinetic_energy + 0.5 * beads[i]->mass * (beads[i]->velocity[0] * beads[i]->velocity[0] + beads[i]->velocity[1] * beads[i]->velocity[1] + beads[i]->velocity[2] * beads[i]->velocity[2]);
-    }
-  }
-  temperature = 2 * kinetic_energy / (3 * num_active_beads * settings->kb);
 
+    }
+    
+  }
+  cout<<kinetic_energy<<endl;
+  temperature = 2 * kinetic_energy / (3 * num_active_beads * settings->kb);
+  cout<<temperature<<endl;
  
 }
 

@@ -89,7 +89,7 @@ Settings::Settings(char parameter_file[200])
   timeseriesfile += directory + "timeseries_" + suffix + ".dat";
 
   //kb is 1,38×10^−14
-  kb=1.38*(pow(10,-14));
+  kb=1.38*(pow(10,-11));
   Lf = interbead_distance * (num_beads_per_fiber - 1); // fix the number of beads and l0 and you calculate Lf
 
 }
